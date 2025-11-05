@@ -1,6 +1,6 @@
 import sys
 
-cell_width = 15
+cell_width = 18
 
 rules = {
     'roots': [],
@@ -9,7 +9,8 @@ rules = {
         (('ვ:1_obj.inverse', 'გ:2_sbj.inverse'), 0),
         (('ი:Iturm.inverse', 'უ:3_sbj.Iturm.inverse'), 0),
         (('ი:Iturm_th.inverse', 'უ:3_sbj.Iturm_th.inverse'), 0),
-        (('ი:vers.direct', 'უ:vers.3_obj.direct'), 0)
+        (('ი:vers.direct', 'უ:vers.3_obj.direct'), 0),
+        (('ვ:1_sbj.direct', 'ჰ:3_obj.direct'), 1)
     ],
     'suffixes': [
         (('ოდ:impf_sub_circ', 'დ:fut2_circ.impf_sub_circ'), 0),

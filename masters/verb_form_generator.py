@@ -1,0 +1,240 @@
+import sys
+
+cell_width = 15
+
+rules = {
+    'roots': [],
+    'prefixes': [
+        (('ვ:1_sbj.direct', 'გ:2_obj.direct'), 0),
+        (('ვ:1_obj.inverse', 'გ:2_sbj.inverse'), 0),
+        (('ი:Iturm.inverse', 'უ:3_sbj.Iturm.inverse'), 0),
+        (('ი:Iturm_th.inverse', 'უ:3_sbj.Iturm_th.inverse'), 0),
+        (('ი:vers.direct', 'უ:vers.3_obj.direct'), 0)
+    ],
+    'suffixes': [
+        (('ოდ:impf_sub_circ', 'დ:fut2_circ.impf_sub_circ'), 0),
+        (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.impf.direct'), 0),
+        (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.cond.direct'), 0),
+        (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.aor.direct'), 0),
+        (('ს:3_sg_sbj.direct', 'თ:2_pl_obj.direct'), 0),
+        (('თ:pl_sbj.direct', 'თ:2_pl_obj.direct'), 1),
+        (('თ:pl_sbj.direct', 'ნენ:3_pl_sbj.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ენ:3_pl_sbj.pres.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ან:3_pl_sbj.pres.nonvers.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ენ:3_pl_sbj.pres.vers.direct'), 0),
+        (('ან:3_pl_sbj.pres.direct', 'ენ:3_pl_sbj.pres.vers.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ან:3_pl_sbj.pres.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ეს:3_pl_sbj.aor.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ნ:3_pl_sbj.IIsubj.direct'), 0),
+        (('ი:impf', 'ა:3_sg_sbj.impf.direct'), 0),
+        (('ი:cond', 'ა:3_sg_sbj.cond.direct'), 0),
+        (('ი:impf', 'ნენ:3_pl_sbj.direct'), 0),
+        (('ი:cond', 'ნენ:3_pl_sbj.direct'), 0),
+        (('ე:subj', 'ნენ:3_pl_sbj.direct'), 0),
+        (('ე:aor', 'ა:3_sg_sbj.aor.direct'), 0),
+        (('ე:aor', 'ეს:3_pl_sbj.aor.direct'), 0),
+
+        (('ს:3_obj.inverse', 'ა:3_obj.Iturm.inverse'), 0),
+        (('ს:3_obj.inverse', 'ა:3_obj.IIturm.inverse'), 0),
+        (('ს:3_obj.inverse', 'თ:2_pl_sbj.inverse'), 0),
+        (('თ:pl_obj.inverse', 'ა:3_obj.Iturm.inverse'), 0),
+        (('თ:pl_obj.inverse', 'ა:3_obj.IIturm.inverse'), 0),
+        (('თ:pl_obj.inverse', 'ს:3_obj.inverse'), 0),
+        (('თ:pl_obj.inverse', 'თ:2_pl_sbj.inverse'), 1),
+        (('თ:3_pl_sbj.3_obj.inverse', 'ს:3_obj.inverse'), 1),
+        (('ე:IIturm', 'ა:3_obj.IIturm.inverse'), 0),
+    ]
+}
+
+persons = ['1', '2', '3']
+numbers = ['sg', 'pl']
+
+
+def make_affixes(params, direction, param_priority, category_to_parameter, colors):
+    affixes = set()
+    for param in params:
+        if param in category_to_parameter[direction]:
+            for sub_param in category_to_parameter[direction][param]:
+                if sub_param['categories'] <= params:
+                    affixes.add(sub_param['param'])
+
+    for condition, result in rules[direction]:
+        if condition[0] in affixes and condition[1] in affixes:
+            if result == 2:
+                continue
+            affixes.remove(condition[result])
+    # print(f'\033[{colors[1]}m{affixes}\033[0m')
+    affixes = list(affixes)
+    affixes.sort(key=lambda x: param_priority[direction][x])
+    return affixes
+
+
+def replace_layout_elements(line, roots, affixes, preverbs):
+    if ':' in line:  # replace [***] with roots or affixes
+        surface_form = line.split(':')[0]
+        if surface_form.startswith('[') and surface_form.endswith(']'):
+            surface_form = surface_form[1:-1]
+            if surface_form.split('.')[0] == 'root':
+                choosing_list = roots
+            elif surface_form.split('.')[0] == 'affix':
+                choosing_list = affixes
+            elif surface_form.split('.')[0] == 'preverb':
+                choosing_list = preverbs
+            else:
+                raise ValueError(f"Unidentified {surface_form.split('.')[0]}")
+            index = int(surface_form.split('.')[1]) if '.' in surface_form else 1
+            # print(surface_form, index, choosing_list)
+            replacer = choosing_list[index - 1].split('.')[0]
+            line = replacer + ':' + ':'.join(line.split(':')[1:])
+            # print(line)
+    return line
+
+
+def read_file(word, roots, affixes, preverbs):
+    file_path = f'data/paradigm_types/{word}.txt'
+    result = {}
+    with open(file_path, 'r', encoding='utf-8') as f:
+        lines = (line.strip() for line in f if line.strip())
+
+        line_iter = iter(lines)
+
+        try:
+            for key in line_iter:
+                # print('key:', key)
+                n = int(next(line_iter))
+                # print('n:', n)
+                values = []
+                for _ in range(n):
+                    line = next(line_iter)
+                    # print('line:', line)
+                    if ', ' in line:
+                        values.append(tuple(line.split(', ')))
+                    else:
+                        line = replace_layout_elements(line, roots, affixes, preverbs)
+                        values.append(line)
+                result[key] = values
+        except StopIteration:
+            raise ValueError("Unexpected end of file while parsing.")
+
+    return result
+
+
+def choose_file(root):
+    layout_file_path = 'data/layout_type_index.txt'
+    with open(layout_file_path, 'r', encoding='utf-8') as f:
+        lines = (line.strip() for line in f if line.strip())
+        line_iter = iter(lines)
+        try:
+            for line in line_iter:
+                layout_with_valency, verbs = line.split('=')
+                layout, valency = layout_with_valency.split(':')
+                verbs = verbs.split(';')
+                for verb in verbs:
+                    if ':' in verb:
+                        verb, params = verb.split(':')
+                        roots = [root for root in params.split(',') if '.' not in root]
+                        affixes = [param for param in params.split(',') if '.' in param]
+                    else:
+                        roots = [verb]
+                        affixes = []
+                    if verb == root:
+                        return layout, valency, roots, affixes
+
+        except StopIteration:
+            raise ValueError("Unexpected end of file while parsing.")
+
+    return None
+
+def make_param_priority(parameters):
+    return {
+        'roots': {param: i for i, param in enumerate(parameters['roots'])},
+        'prefixes': {param: i for i, param in enumerate(parameters['prefixes'])},
+        'suffixes': {param: i for i, param in enumerate(parameters['suffixes'])}
+    }
+
+
+def make_category_to_parameter(parameters):
+    category_to_parameter = {'roots': {}, 'prefixes': {}, 'suffixes': {}}
+
+    for direction in ['roots', 'prefixes', 'suffixes']:
+        for param in parameters[direction]:
+            value, gloss = param.split(':')
+            categories = gloss.split('.')
+            for category in categories:
+                if category in category_to_parameter[direction]:
+                    category_to_parameter[direction][category].append({'param': param, 'categories': set(categories)})
+                else:
+                    category_to_parameter[direction][category] = [{'param': param, 'categories': set(categories)}]
+    return category_to_parameter
+
+
+def main(args):
+    root = args[0]
+    preverbs = [args[1]] if len(args) > 1 else []
+
+    layout, valency, roots, affixes = choose_file(root)
+
+    parameters = read_file(layout, roots, affixes, preverbs)
+    param_priority = make_param_priority(parameters)
+    category_to_parameter = make_category_to_parameter(parameters)
+    screeves = parameters['screeves']
+
+    for screeve in screeves:
+        screeve_params = set(screeve[1].split('.'))
+        print(f'\033[93;1m{screeve[0]}\033[0m')
+        for sbj_num in numbers:
+            for sbj_pers in persons:
+                for obj_num in numbers if int(valency) > 1 else ['sg']:
+                    for obj_pers in persons if int(valency) > 1 else [3]:
+                        if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
+                            print(f'{"":{cell_width}}', end='')
+                            continue
+                        pers_params = {
+                            f'{sbj_pers}_sbj',
+                            f'{sbj_num}_sbj',
+                            f'{sbj_pers}_{sbj_num}_sbj',
+                            f'{obj_pers}_obj',
+                            f'{obj_num}_obj',
+                            f'{obj_pers}_{obj_num}_obj'
+                        }
+
+                        params = screeve_params | pers_params | {'ALL'}
+                        # print(screeve[0], f'sbj: \033[32m{sbj_pers}_{sbj_num}\033[0m', f'obj: \033[34m{obj_pers}_{obj_num}\033[0m')
+                        # print(f'\033[33m{params}\033[0m')
+
+                        prefixes = make_affixes(
+                            params,
+                            'prefixes',
+                            param_priority,
+                            category_to_parameter,
+                            [36, 35]
+                        )
+
+                        roots = make_affixes(
+                            params,
+                            'roots',
+                            param_priority,
+                            category_to_parameter,
+                            [93, 33]
+                        )
+
+                        suffixes = make_affixes(
+                            params,
+                            'suffixes',
+                            param_priority,
+                            category_to_parameter,
+                            [96, 95]
+                        )
+
+                        prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
+                        root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
+                        suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
+                        word_form = f'{prefix_form}{root_form}{suffix_form}'
+
+                        print(f'{word_form:<{cell_width}}', end='')
+                print()
+        print()
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

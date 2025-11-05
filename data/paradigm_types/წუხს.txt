@@ -1,0 +1,48 @@
+screeves
+9
+pres, Iseries.pres.nonvers.direct
+fut2, Iseries.pres.vers.direct
+impf, Iseries.impf.nonvers.impf_sub_circ.direct
+cond2, Iseries.impf.vers.impf_sub_circ.direct
+subj, Iseries.subj.nonvers.impf_sub_circ.direct
+fut2_subj, Iseries.subj.vers.impf_sub_circ.direct
+Iturm, IIIseries.Iturm.inverse
+IIturm, IIIseries.IIturm.IIturm_sub_circ.inverse
+IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.inverse
+roots
+1
+[root]:ALL
+prefixes
+9
+ვ:1_sbj.direct
+ვ:1_obj.inverse
+მ:1_sg_sbj.inverse
+გ:2_sbj.inverse
+გვ:1_pl_sbj.inverse
+ი:vers
+ი:Iturm.inverse
+უ:3_sbj.Iturm.inverse
+ე:IIturm_sub_circ.inverse
+suffixes
+21
+ებ:Iseries.vers
+დ:impf_sub_circ
+ი:impf
+ი:cond2
+ე:subj
+ი:Iturm
+ე:IIturm
+ო:IIIsubj
+ვარ:1_sbj.pres.nonvers.direct
+ხარ:2_sbj.pres.nonvers.direct
+ს:3_sg_sbj.direct
+ა:3_sg_sbj.impf.direct
+თ:pl_sbj.direct
+ენ:3_pl_sbj.pres.vers.direct
+ნენ:3_pl_sbj.direct
+ან:3_pl_sbj.pres.nonvers.direct
+ს:3_obj.inverse
+ა:3_obj.Iturm.inverse
+ა:3_obj.IIturm.inverse
+თ:2_pl_sbj.inverse
+თ:3_pl_sbj.3_obj.inverse

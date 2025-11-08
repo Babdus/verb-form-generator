@@ -1,15 +1,15 @@
 screeves
 16
-pres, Iseries.pres.nonvers.direct
-fut, Iseries.pres.nonvers.prfv.direct
-impf, Iseries.impf.nonvers.impf_sub_circ.direct
-cond, Iseries.impf.nonvers.impf_sub_circ.prfv.direct
-subj, Iseries.subj.nonvers.impf_sub_circ.direct
-fut_subj, Iseries.subj.nonvers.impf_sub_circ.prfv.direct
-aor, IIseries.aor.nonvers.direct
-aor_prfv, IIseries.aor.nonvers.prfv.direct
-IIsubj, IIseries.IIsubj.nonvers.direct
-IIsubj_prfv, IIseries.IIsubj.nonvers.prfv.direct
+fut2, Iseries.pres.vers.direct
+fut2_prfv, Iseries.pres.vers.prfv.direct
+cond2, Iseries.impf.vers.impf_sub_circ.direct
+cond2_prfv, Iseries.impf.vers.impf_sub_circ.prfv.direct
+fut2_subj, Iseries.subj.vers.impf_sub_circ.direct
+fut2_subj_prfv, Iseries.subj.vers.impf_sub_circ.prfv.direct
+aor2, IIseries.aor.vers.direct
+aor2_prfv, IIseries.aor.vers.prfv.direct
+IIsubj2, IIseries.IIsubj.vers.direct
+IIsubj2_prfv, IIseries.IIsubj.vers.prfv.direct
 Iturm, IIIseries.Iturm.inverse
 Iturm_prfv, IIIseries.Iturm.prfv.inverse
 IIturm, IIIseries.IIturm.IIturm_sub_circ.inverse
@@ -33,8 +33,8 @@ prefixes
 მ:1_sg_sbj.inverse
 გ:2_sbj.inverse
 გვ:1_pl_sbj.inverse
-[affix.1]:Iseries
-[affix.1]:IIseries
+[affix.2]:vers.direct
+[affix.1]:vers.3_obj.direct
 ი:Iturm.inverse
 უ:3_sbj.Iturm.inverse
 ე:IIturm_sub_circ.inverse

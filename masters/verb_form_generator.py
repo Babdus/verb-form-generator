@@ -1,7 +1,5 @@
 import sys
 
-cell_width = 18
-
 rules = {
     'roots': [],
     'prefixes': [
@@ -10,6 +8,8 @@ rules = {
         (('ი:Iturm.inverse', 'უ:3_sbj.Iturm.inverse'), 0),
         (('ი:Iturm_th.inverse', 'უ:3_sbj.Iturm_th.inverse'), 0),
         (('ი:vers.direct', 'უ:vers.3_obj.direct'), 0),
+        (('ი:vers.direct', 'ი:vers.3_obj.direct'), 0),
+        (('ა:vers.direct', 'ა:vers.3_obj.direct'), 0),
         (('ვ:1_sbj.direct', 'ჰ:3_obj.direct'), 1)
     ],
     'suffixes': [
@@ -173,6 +173,10 @@ def main(args):
     root = args[0]
     preverbs = [args[1]] if len(args) > 1 else []
 
+    temp_num = args[2]
+
+    cell_width = len(root) + len(preverbs[0]) + 8
+
     layout, valency, roots, affixes = choose_file(root)
 
     parameters = read_file(layout, roots, affixes, preverbs)
@@ -180,61 +184,68 @@ def main(args):
     category_to_parameter = make_category_to_parameter(parameters)
     screeves = parameters['screeves']
 
-    for screeve in screeves:
-        screeve_params = set(screeve[1].split('.'))
-        print(f'\033[93;1m{screeve[0]}\033[0m')
-        for sbj_num in numbers:
-            for sbj_pers in persons:
-                for obj_num in numbers if int(valency) > 1 else ['sg']:
-                    for obj_pers in persons if int(valency) > 1 else [3]:
-                        if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
-                            print(f'{"":{cell_width}}', end='')
-                            continue
-                        pers_params = {
-                            f'{sbj_pers}_sbj',
-                            f'{sbj_num}_sbj',
-                            f'{sbj_pers}_{sbj_num}_sbj',
-                            f'{obj_pers}_obj',
-                            f'{obj_num}_obj',
-                            f'{obj_pers}_{obj_num}_obj'
-                        }
+    with open(f'data/temp/{root}_{temp_num}.txt', 'w', encoding='utf-8') as f:
 
-                        params = screeve_params | pers_params | {'ALL'}
-                        # print(screeve[0], f'sbj: \033[32m{sbj_pers}_{sbj_num}\033[0m', f'obj: \033[34m{obj_pers}_{obj_num}\033[0m')
-                        # print(f'\033[33m{params}\033[0m')
+        for screeve in screeves:
+            screeve_params = set(screeve[1].split('.'))
+            print(f'\033[93;1m{screeve[0]}\033[0m')
+            f.write(f'{screeve[0]}\n')
+            for sbj_num in numbers:
+                for sbj_pers in persons:
+                    for obj_num in numbers if int(valency) > 1 else ['sg']:
+                        for obj_pers in persons if int(valency) > 1 else [3]:
+                            if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
+                                print(f'{"":{cell_width}}', end='')
+                                f.write(f'{"":{cell_width}}')
+                                continue
+                            pers_params = {
+                                f'{sbj_pers}_sbj',
+                                f'{sbj_num}_sbj',
+                                f'{sbj_pers}_{sbj_num}_sbj',
+                                f'{obj_pers}_obj',
+                                f'{obj_num}_obj',
+                                f'{obj_pers}_{obj_num}_obj'
+                            }
 
-                        prefixes = make_affixes(
-                            params,
-                            'prefixes',
-                            param_priority,
-                            category_to_parameter,
-                            [36, 35]
-                        )
+                            params = screeve_params | pers_params | {'ALL'}
+                            # print(screeve[0], f'sbj: \033[32m{sbj_pers}_{sbj_num}\033[0m', f'obj: \033[34m{obj_pers}_{obj_num}\033[0m')
+                            # print(f'\033[33m{params}\033[0m')
 
-                        roots = make_affixes(
-                            params,
-                            'roots',
-                            param_priority,
-                            category_to_parameter,
-                            [93, 33]
-                        )
+                            prefixes = make_affixes(
+                                params,
+                                'prefixes',
+                                param_priority,
+                                category_to_parameter,
+                                [36, 35]
+                            )
 
-                        suffixes = make_affixes(
-                            params,
-                            'suffixes',
-                            param_priority,
-                            category_to_parameter,
-                            [96, 95]
-                        )
+                            roots = make_affixes(
+                                params,
+                                'roots',
+                                param_priority,
+                                category_to_parameter,
+                                [93, 33]
+                            )
 
-                        prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
-                        root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
-                        suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
-                        word_form = f'{prefix_form}{root_form}{suffix_form}'
+                            suffixes = make_affixes(
+                                params,
+                                'suffixes',
+                                param_priority,
+                                category_to_parameter,
+                                [96, 95]
+                            )
 
-                        print(f'{word_form:<{cell_width}}', end='')
-                print()
-        print()
+                            prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
+                            root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
+                            suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
+                            word_form = f'{prefix_form}{root_form}{suffix_form}'
+
+                            print(f'{word_form:<{cell_width}}', end='')
+                            f.write(f'{word_form:<{cell_width}}')
+                    print()
+                    f.write('\n')
+            print()
+            f.write('\n')
 
 
 if __name__ == "__main__":

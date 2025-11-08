@@ -36,8 +36,8 @@ prefixes
 მ:1_sg_sbj.inverse
 გ:2_sbj.inverse
 გვ:1_pl_sbj.inverse
-ი:vers.direct
-უ:vers.3_obj.direct
+[affix.2]:vers.direct
+[affix.1]:vers.3_obj.direct
 ი:Iturm.inverse
 უ:3_sbj.Iturm.inverse
 ე:IIturm_sub_circ.inverse

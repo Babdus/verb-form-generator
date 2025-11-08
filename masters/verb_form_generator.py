@@ -171,20 +171,21 @@ def make_category_to_parameter(parameters):
 
 def main(args):
     root = args[0]
-    preverbs = [args[1]] if len(args) > 1 else []
+    preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
 
     temp_num = args[2]
 
-    cell_width = len(root) + len(preverbs[0]) + 8
+    cell_width = len(root) + (len(preverbs[0]) if len(preverbs) > 0 else 0) + 8
 
     layout, valency, roots, affixes = choose_file(root)
+    valency = int(valency)
 
     parameters = read_file(layout, roots, affixes, preverbs)
     param_priority = make_param_priority(parameters)
     category_to_parameter = make_category_to_parameter(parameters)
     screeves = parameters['screeves']
 
-    with open(f'data/temp/{root}_{temp_num}.txt', 'w', encoding='utf-8') as f:
+    with open(f'data/temp/{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
 
         for screeve in screeves:
             screeve_params = set(screeve[1].split('.'))
@@ -192,11 +193,11 @@ def main(args):
             f.write(f'{screeve[0]}\n')
             for sbj_num in numbers:
                 for sbj_pers in persons:
-                    for obj_num in numbers if int(valency) > 1 else ['sg']:
-                        for obj_pers in persons if int(valency) > 1 else [3]:
+                    for obj_num in numbers if valency > 1 else ['sg']:
+                        for obj_pers in persons if valency > 1 else [3]:
                             if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
                                 print(f'{"":{cell_width}}', end='')
-                                f.write(f'{"":{cell_width}}')
+                                f.write(',')
                                 continue
                             pers_params = {
                                 f'{sbj_pers}_sbj',
@@ -241,11 +242,10 @@ def main(args):
                             word_form = f'{prefix_form}{root_form}{suffix_form}'
 
                             print(f'{word_form:<{cell_width}}', end='')
-                            f.write(f'{word_form:<{cell_width}}')
+                            f.write(f'{word_form:},')
                     print()
                     f.write('\n')
             print()
-            f.write('\n')
 
 
 if __name__ == "__main__":

@@ -1,15 +1,15 @@
 screeves
 18
-fut2, Iseries.pres.vers.direct
-fut2_prfv, Iseries.pres.vers.prfv.direct
-cond2, Iseries.impf.vers.impf_sub_circ.direct
-cond2_prfv, Iseries.impf.vers.impf_sub_circ.prfv.direct
-fut2_subj, Iseries.subj.vers.impf_sub_circ.direct
-fut2_subj_prfv, Iseries.subj.vers.impf_sub_circ.prfv.direct
-aor2, IIseries.aor.vers.direct
-aor2_prfv, IIseries.aor.vers.prfv.direct
-IIsubj2, IIseries.IIsubj.vers.direct
-IIsubj2_prfv, IIseries.IIsubj.vers.prfv.direct
+pres, Iseries.pres.nonvers.direct
+fut, Iseries.pres.nonvers.prfv.direct
+impf, Iseries.impf.nonvers.impf_sub_circ.direct
+cond, Iseries.impf.nonvers.impf_sub_circ.prfv.direct
+subj, Iseries.subj.nonvers.impf_sub_circ.direct
+fut_subj, Iseries.subj.nonvers.impf_sub_circ.prfv.direct
+aor, IIseries.aor.nonvers.direct
+aor_prfv, IIseries.aor.nonvers.prfv.direct
+IIsubj, IIseries.IIsubj.nonvers.direct
+IIsubj_prfv, IIseries.IIsubj.nonvers.prfv.direct
 Iturm, IIIseries.Iturm.inverse
 Iturm_prfv, IIIseries.Iturm.prfv.inverse
 Iturm_th, IIIseries.Iturm_th.inverse
@@ -19,10 +19,20 @@ IIturm_prfv, IIIseries.IIturm.IIturm_sub_circ.prfv.inverse
 IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.inverse
 IIIsubj_prfv, IIIseries.IIIsubj.IIturm_sub_circ.prfv.inverse
 roots
-1
-[root]:ALL
+11
+[root.1]:Iseries
+[root.2]:aor.1_sbj
+[root.2]:aor.2_sbj
+[root.1]:aor.3_sbj
+[root.1]:IIsubj
+[root.1]:Iturm
+[root.2]:Iturm_th
+[root.2]:IIturm.1_obj
+[root.2]:IIturm.2_obj
+[root.1]:IIturm.3_obj
+[root.1]:IIIsubj
 prefixes
-15
+14
 [preverb]:prfv
 ვ:1_sbj.direct
 მ:1_sg_obj.direct
@@ -32,7 +42,6 @@ prefixes
 მ:1_sg_sbj.inverse
 გ:2_sbj.inverse
 გვ:1_pl_sbj.inverse
-[affix.1]:vers
 ი:Iturm.inverse
 ი:Iturm_th.inverse
 უ:3_sbj.Iturm.inverse
@@ -44,12 +53,12 @@ suffixes
 დ:impf_sub_circ
 ი:impf
 ე:subj
-ე:aor
-ო:IIsubj
+ი:aor
+ა:IIsubj
 ი:Iturm
 ავ:Iturm_th
-ე:IIturm
-ო:IIIsubj
+ი:IIturm
+ა:IIIsubj
 ს:3_sg_sbj.direct
 ა:3_sg_sbj.impf.direct
 ა:3_sg_sbj.aor.direct

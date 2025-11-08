@@ -17,16 +17,17 @@ IIturm_prfv, IIIseries.IIturm.IIturm_sub_circ.prfv.inverse
 IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.inverse
 IIIsubj_prfv, IIIseries.IIIsubj.IIturm_sub_circ.prfv.inverse
 roots
-9
+10
 [root.1]:Iseries
 [root.2]:aor.1_sbj
 [root.2]:aor.2_sbj
 [root.1]:aor.3_sbj
 [root.1]:IIsubj
 [root.1]:Iturm
-[root.2]:IIturm_sub_circ.1_obj
-[root.2]:IIturm_sub_circ.2_obj
-[root.1]:IIturm_sub_circ.3_obj
+[root.2]:IIturm.1_obj
+[root.2]:IIturm.2_obj
+[root.1]:IIturm.3_obj
+[root.1]:IIIsubj
 prefixes
 12
 [preverb]:prfv
@@ -42,7 +43,7 @@ prefixes
 უ:3_sbj.Iturm.inverse
 ე:IIturm_sub_circ.inverse
 suffixes
-27
+26
 ი:Iseries
 დ:impf_sub_circ
 ი:impf
@@ -51,8 +52,7 @@ suffixes
 ა:IIsubj
 ი:Iturm
 ი:IIturm
-ი:IIIsubj
-ა:3_obj.IIIsubj.inverse
+ა:IIIsubj
 ს:3_sg_sbj.direct
 ა:3_sg_sbj.impf.direct
 ა:3_sg_sbj.aor.direct

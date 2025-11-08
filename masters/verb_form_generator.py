@@ -34,6 +34,8 @@ rules = {
         (('ე:subj', 'ნენ:3_pl_sbj.direct'), 0),
         (('ე:aor', 'ა:3_sg_sbj.aor.direct'), 0),
         (('ე:aor', 'ეს:3_pl_sbj.aor.direct'), 0),
+        (('ი:aor', 'ა:3_sg_sbj.aor.direct'), 0),
+        (('ი:aor', 'ეს:3_pl_sbj.aor.direct'), 0),
 
         (('ს:3_obj.inverse', 'ა:3_obj.Iturm.inverse'), 0),
         (('ს:3_obj.inverse', 'ა:3_obj.IIturm.inverse'), 0),
@@ -44,6 +46,8 @@ rules = {
         (('თ:pl_obj.inverse', 'თ:2_pl_sbj.inverse'), 1),
         (('თ:3_pl_sbj.3_obj.inverse', 'ს:3_obj.inverse'), 1),
         (('ე:IIturm', 'ა:3_obj.IIturm.inverse'), 0),
+        (('ი:IIturm', 'ა:3_obj.IIturm.inverse'), 0),
+        (('ი:IIIsubj', 'ა:3_obj.IIIsubj.inverse'), 0)
     ]
 }
 

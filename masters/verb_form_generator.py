@@ -17,6 +17,7 @@ rules = {
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.impf.direct'), 0),
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.cond.direct'), 0),
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.aor.direct'), 0),
+        (('ს:3_sg_sbj.direct', 'ო:3_sg_sbj.aor.direct'), 0),
         (('ს:3_sg_sbj.direct', 'თ:2_pl_obj.direct'), 0),
         (('თ:pl_sbj.direct', 'თ:2_pl_obj.direct'), 1),
         (('თ:pl_sbj.direct', 'ნენ:3_pl_sbj.direct'), 0),
@@ -33,12 +34,15 @@ rules = {
         (('ი:cond', 'ნენ:3_pl_sbj.direct'), 0),
         (('ე:subj', 'ნენ:3_pl_sbj.direct'), 0),
         (('ე:aor', 'ა:3_sg_sbj.aor.direct'), 0),
+        (('ე:aor', 'ო:3_sg_sbj.aor.direct'), 0),
         (('ე:aor', 'ეს:3_pl_sbj.aor.direct'), 0),
         (('ი:aor', 'ა:3_sg_sbj.aor.direct'), 0),
+        (('ი:aor', 'ო:3_sg_sbj.aor.direct'), 0),
         (('ი:aor', 'ეს:3_pl_sbj.aor.direct'), 0),
 
         (('ს:3_obj.inverse', 'ა:3_obj.Iturm.inverse'), 0),
         (('ს:3_obj.inverse', 'ა:3_obj.IIturm.inverse'), 0),
+        (('ს:3_obj.inverse', 'ო:3_obj.IIturm.inverse'), 0),
         (('ს:3_obj.inverse', 'თ:2_pl_sbj.inverse'), 0),
         (('თ:pl_obj.inverse', 'ა:3_obj.Iturm.inverse'), 0),
         (('თ:pl_obj.inverse', 'ა:3_obj.IIturm.inverse'), 0),
@@ -46,7 +50,9 @@ rules = {
         (('თ:pl_obj.inverse', 'თ:2_pl_sbj.inverse'), 1),
         (('თ:3_pl_sbj.3_obj.inverse', 'ს:3_obj.inverse'), 1),
         (('ე:IIturm', 'ა:3_obj.IIturm.inverse'), 0),
+        (('ე:IIturm', 'ო:3_obj.IIturm.inverse'), 0),
         (('ი:IIturm', 'ა:3_obj.IIturm.inverse'), 0),
+        (('ი:IIturm', 'ო:3_obj.IIturm.inverse'), 0),
         (('ი:IIIsubj', 'ა:3_obj.IIIsubj.inverse'), 0)
     ]
 }
@@ -173,6 +179,10 @@ def make_category_to_parameter(parameters):
     return category_to_parameter
 
 
+def generator(verb, preverb):
+    return main([verb, preverb, '1'])
+
+
 def main(args):
     root = args[0]
     preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
@@ -189,7 +199,7 @@ def main(args):
     category_to_parameter = make_category_to_parameter(parameters)
     screeves = parameters['screeves']
 
-    with open(f'data/temp/{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
+    with open(f'data/temp/{preverbs[0]}_{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
 
         for screeve in screeves:
             screeve_params = set(screeve[1].split('.'))

@@ -150,11 +150,11 @@ def choose_file(root):
                         affixes = []
                     if verb == root:
                         return layout, valency, roots, affixes
-
         except StopIteration:
             raise ValueError("Unexpected end of file while parsing.")
 
-    return None
+    print(f'\033[31m{root}\033[0m ვერ მოიძებნა პარადიგმის ყალიბებში')
+    exit()
 
 def make_param_priority(parameters):
     return {
@@ -199,7 +199,7 @@ def main(args):
     category_to_parameter = make_category_to_parameter(parameters)
     screeves = parameters['screeves']
 
-    with open(f'data/temp/{preverbs[0]}_{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
+    with open(f'data/temp/{preverbs[0] if len(preverbs) > 0 else ""}_{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
 
         for screeve in screeves:
             screeve_params = set(screeve[1].split('.'))

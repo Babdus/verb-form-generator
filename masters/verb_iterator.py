@@ -1,3 +1,4 @@
+import json
 import sys
 import verb_form_generator
 
@@ -22,9 +23,15 @@ def main(args):
         except StopIteration:
             raise ValueError("Unexpected end of file while parsing.")
 
+    with open('data/dictionary.json', 'r', encoding='utf-8') as f:
+        dictionary = json.load(f)
+
     for verb in result_verbs:
         for preverb in preverbs:
-            verb_form_generator.generator(verb, preverb)
+            verb_form_generator.generator(verb, preverb, dictionary)
+
+    with open('data/dictionary.json', 'w', encoding='utf-8') as f:
+        json.dump(dictionary, f, sort_keys=True, ensure_ascii=False, indent=4)
 
 
 if __name__ == '__main__':

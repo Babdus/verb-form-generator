@@ -1,3 +1,4 @@
+import json
 import sys
 
 rules = {
@@ -179,17 +180,29 @@ def make_category_to_parameter(parameters):
     return category_to_parameter
 
 
-def generator(verb, preverb):
-    return main([verb, preverb, '1'])
+def add_to_dictionary(dictionary, word_form, entry):
+    if word_form in dictionary:
+        entries = dictionary[word_form]
+        if entry not in entries:
+            dictionary[word_form].append(entry)
+    else:
+        dictionary[word_form] = [entry]
 
 
-def main(args):
+def generator(verb, preverb, dictionary):
+    return main([verb, preverb, '1'], dictionary)
+
+
+def main(args, dictionary=None):
     root = args[0]
     preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
+    preverb = preverbs[0] if len(preverbs) > 0 else ""
+
+    print(f'\033[92;1m{preverb}\033[96;1m{root}\033[0m')
 
     temp_num = args[2]
 
-    cell_width = len(root) + (len(preverbs[0]) if len(preverbs) > 0 else 0) + 8
+    cell_width = len(root) + len(preverb) + 8
 
     layout, valency, roots, affixes = choose_file(root)
     valency = int(valency)
@@ -199,18 +212,20 @@ def main(args):
     category_to_parameter = make_category_to_parameter(parameters)
     screeves = parameters['screeves']
 
-    with open(f'data/temp/{preverbs[0] if len(preverbs) > 0 else ""}_{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
+    with open(f'data/temp/{preverb}_{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
 
         for screeve in screeves:
             screeve_params = set(screeve[1].split('.'))
-            print(f'\033[93;1m{screeve[0]}\033[0m')
+            if dictionary is None:
+                print(f'\033[93;1m{screeve[0]}\033[0m')
             f.write(f'{screeve[0]}\n')
             for sbj_num in numbers:
                 for sbj_pers in persons:
                     for obj_num in numbers if valency > 1 else ['sg']:
                         for obj_pers in persons if valency > 1 else [3]:
                             if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
-                                print(f'{"":{cell_width}}', end='')
+                                if dictionary is None:
+                                    print(f'{"":{cell_width}}', end='')
                                 f.write(',')
                                 continue
                             pers_params = {
@@ -255,11 +270,27 @@ def main(args):
                             suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
                             word_form = f'{prefix_form}{root_form}{suffix_form}'
 
-                            print(f'{word_form:<{cell_width}}', end='')
+                            if dictionary is None:
+                                print(f'{word_form:<{cell_width}}', end='')
                             f.write(f'{word_form:},')
-                    print()
+
+                            if dictionary is not None:
+                                dictionary_entry = {
+                                    'verb': root,
+                                    'screeve': screeve[0],
+                                    'subject number': sbj_num,
+                                    'subject person': sbj_pers,
+                                    'object number': obj_num,
+                                    'object person': obj_pers,
+                                    'preverb': preverb,
+                                    'blueprint': layout
+                                }
+                                add_to_dictionary(dictionary, word_form, dictionary_entry)
+                    if dictionary is None:
+                        print()
                     f.write('\n')
-            print()
+            if dictionary is None:
+                print()
 
 
 if __name__ == "__main__":

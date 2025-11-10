@@ -1,5 +1,5 @@
-import json
 import sys
+from translations import geo
 
 rules = {
     'roots': [],
@@ -189,16 +189,16 @@ def add_to_dictionary(dictionary, word_form, entry):
         dictionary[word_form] = [entry]
 
 
-def generator(verb, preverb, dictionary):
-    return main([verb, preverb, '1'], dictionary)
+def generator(verb, preverb, dictionary, highlight=None):
+    return main([verb, preverb, '1'], dictionary, highlight)
 
 
-def main(args, dictionary=None):
+def main(args, dictionary=None, highlight=None):
     root = args[0]
     preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
     preverb = preverbs[0] if len(preverbs) > 0 else ""
 
-    print(f'\033[92;1m{preverb}\033[96;1m{root}\033[0m')
+    print(f'\033[37;1m{preverb}\033[32;1m{root}\033[0m\n')
 
     temp_num = args[2]
 
@@ -217,12 +217,12 @@ def main(args, dictionary=None):
         for screeve in screeves:
             screeve_params = set(screeve[1].split('.'))
             if dictionary is None:
-                print(f'\033[93;1m{screeve[0]}\033[0m')
+                print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
             f.write(f'{screeve[0]}\n')
             for sbj_num in numbers:
                 for sbj_pers in persons:
                     for obj_num in numbers if valency > 1 else ['sg']:
-                        for obj_pers in persons if valency > 1 else [3]:
+                        for obj_pers in persons if valency > 1 else ['3']:
                             if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
                                 if dictionary is None:
                                     print(f'{"":{cell_width}}', end='')
@@ -271,7 +271,10 @@ def main(args, dictionary=None):
                             word_form = f'{prefix_form}{root_form}{suffix_form}'
 
                             if dictionary is None:
-                                print(f'{word_form:<{cell_width}}', end='')
+                                if highlight == word_form:
+                                    print(f'\033[91;3m{word_form:<{cell_width}}\033[0m', end='')
+                                else:
+                                    print(f'{word_form:<{cell_width}}', end='')
                             f.write(f'{word_form:},')
 
                             if dictionary is not None:

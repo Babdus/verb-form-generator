@@ -1,6 +1,19 @@
 import json
 import sys
 
+import verb_form_generator
+from translations import geo
+
+
+def print_entry(entry):
+    print(f'\033[93m{"ზმნა:":<{16}}\033[32;1;3m{entry["verb"]}\033[0m')
+    print(f'\033[33m{"მწკრივი:":<{16}}\033[33;1m{geo[entry["screeve"]]}\033[0m')
+    print(f'\033[33m{"სუბიექტი:":<{16}}\033[33;1m{geo[entry["subject person"]]} {geo[entry["subject number"]]}\033[0m')
+    print(f'\033[33m{"ობიექტი:":<{16}}\033[33;1m{geo[entry["object person"]]} {geo[entry["object number"]]}\033[0m')
+    print(f'\033[33m{"ზმნისწინი:":<{16}}\033[37;1m{entry["preverb"]}\033[0m')
+    print(f'\033[33m{"ყალიბი:":<{16}}\033[97;1m{entry["blueprint"]}\033[0m')
+    print()
+
 
 def main(args):
     word_form = args[0]
@@ -10,22 +23,22 @@ def main(args):
     if entries is None:
         print('\033[31;1mNot found\033[0m')
         return 0
-    last_csv_file = None
+    paradigms = set()
+    preverbs = []
+    printed_entries = []
+    print(f'\n\033[37m{"ფორმა:":<{16}}\033[97;1;3m{word_form}\n')
     for entry in entries:
-        print(entry)
+        printed_entry = entry.copy()
+        printed_entry.pop('preverb', None)
+        if len(printed_entries) == 0 or printed_entry not in printed_entries:
+            print_entry(entry)
+        printed_entries.append(printed_entry)
         verb = entry['verb']
         preverb = entry['preverb']
-        csv_file = f'data/temp/{preverb}_{verb}_1.csv'
-        if csv_file != last_csv_file:
-            with open(csv_file, 'r', encoding='utf-8') as f:
-                lines = (line.strip() for line in f if line.strip())
-                line_iter = iter(lines)
-                try:
-                    for line in line_iter:
-                        print(line)
-                except StopIteration:
-                    raise ValueError("Unexpected end of file while parsing.")
-            last_csv_file = csv_file
+        preverbs.append(preverb)
+        paradigms.add(verb)
+    for verb in paradigms:
+        verb_form_generator.generator(verb, preverbs[0], dictionary=None, highlight=word_form)
     return 0
 
 

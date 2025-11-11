@@ -26,7 +26,7 @@ roots
 [root.1]:aor.3_sbj
 [root.1]:IIsubj
 [root.1]:Iturm
-[root.2]:Iturm_th
+[root.1]:Iturm_th
 [root.2]:IIturm.1_obj
 [root.2]:IIturm.2_obj
 [root.1]:IIturm.3_obj

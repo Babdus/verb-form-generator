@@ -17,8 +17,10 @@ IIturm_impf_pv, IIIseries.IIturm_impf.IIturm_impf_sub_circ.prfv.direct
 IIIsubj_impf, IIIseries.IIIsubj_impf.IIturm_impf_sub_circ.direct
 IIIsubj_impf_pv, IIIseries.IIIsubj_impf.IIturm_impf_sub_circ.prfv.direct
 roots
-1
-[root.1]:ALL
+3
+[root.1]:Iseries
+[root.2]:IIseries
+[root.1]:IIIseries
 prefixes
 7
 [preverb]:prfv
@@ -29,17 +31,16 @@ prefixes
 გვ:1_pl_obj.direct
 [affix.1]:vers
 suffixes
-33
+32
 ევ:pres
 ე:impf_sub_circ
 ოდ:impf_sub_circ
 ი:pres
 ი:impf
 ე:subj
-ი:IIseries.FORCE
-ვ:IIseries.3_pl_sbj.direct
-ე:aor
-ო:IIsubj
+ი:aor.1_sbj.direct
+ი:aor.2_sbj.direct
+ა:IIsubj
 ევ:Iturm
 ი:Iturm
 ე:IIturm_impf_sub_circ

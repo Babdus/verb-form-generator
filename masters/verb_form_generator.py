@@ -30,6 +30,7 @@ rules = {
         (('ა:3_sbj.IIturm.direct', 'ვ:IIturm.3_pl_sbj.direct'), 0),
         (('ს:3_sg_sbj.direct', 'ო:3_sg_sbj.aor.direct'), 0),
         (('ს:3_sg_sbj.direct', 'თ:2_pl_obj.direct'), 0),
+        (('ს:3_sg_sbj.direct', 'თ:3_pl_obj.3_sg_sbj.direct'), 0),
         (('თ:pl_sbj.direct', 'თ:2_pl_obj.direct'), 1),
         (('თ:pl_sbj.direct', 'ნენ:3_pl_sbj.direct'), 0),
         (('ნენ:3_pl_sbj.direct', 'ენ:3_pl_sbj.pres.direct'), 0),

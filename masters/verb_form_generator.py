@@ -157,6 +157,7 @@ def read_file(word, roots, affixes, preverbs):
 
 def choose_file(root):
     layout_file_path = 'data/layout_type_index.txt'
+    candidate_files = []
     with open(layout_file_path, 'r', encoding='utf-8') as f:
         lines = (line.strip() for line in f if line.strip())
         line_iter = iter(lines)
@@ -174,12 +175,13 @@ def choose_file(root):
                         roots = [verb]
                         affixes = []
                     if verb == root:
-                        return layout, valency, roots, affixes
+                        candidate_files.append((layout, valency, roots, affixes))
         except StopIteration:
             raise ValueError("Unexpected end of file while parsing.")
-
-    print(f'\033[31m{root}\033[0m ვერ მოიძებნა პარადიგმის ყალიბებში')
-    exit()
+    if len(candidate_files) == 0:
+        print(f'\033[31m{root}\033[0m ვერ მოიძებნა პარადიგმის ყალიბებში')
+        exit()
+    return candidate_files
 
 def make_param_priority(parameters):
     return {
@@ -222,102 +224,107 @@ def main(args, dictionary=None, highlight=None):
     preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
     preverb = preverbs[0] if len(preverbs) > 0 else ""
 
-    print(f'\033[37;1m{preverb}\033[32;1m{root}\033[0m\n')
-
     temp_num = args[2]
 
     cell_width = len(root) + len(preverb) + 8
 
-    layout, valency, roots, affixes = choose_file(root)
-    valency = int(valency)
+    candidate_files = choose_file(root)
+    for layout, valency, roots, affixes in candidate_files:
+        print(f'\033[37;1m{preverb}\033[32;1m{root}\033[0m\n')
 
-    parameters = read_file(layout, roots, affixes, preverbs)
-    param_priority = make_param_priority(parameters)
-    category_to_parameter = make_category_to_parameter(parameters)
-    screeves = parameters['screeves']
+        valency = int(valency)
 
-    with open(f'data/temp/{preverb}_{root}_{temp_num}.csv', 'w', encoding='utf-8') as f:
+        parameters = read_file(layout, roots, affixes, preverbs)
+        param_priority = make_param_priority(parameters)
+        category_to_parameter = make_category_to_parameter(parameters)
+        screeves = parameters['screeves']
 
-        for screeve in screeves:
-            screeve_params = set(screeve[1].split('.'))
-            if dictionary is None:
-                print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
-            f.write(f'{screeve[0]}\n')
-            for sbj_num in numbers:
-                for sbj_pers in persons:
-                    for obj_num in numbers if valency > 1 else ['sg']:
-                        for obj_pers in persons if valency > 1 else ['3']:
-                            if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
-                                if dictionary is None:
-                                    print(f'{"":{cell_width}}', end='')
-                                f.write(',')
-                                continue
-                            pers_params = {
-                                f'{sbj_pers}_sbj',
-                                f'{sbj_num}_sbj',
-                                f'{sbj_pers}_{sbj_num}_sbj',
-                                f'{obj_pers}_obj',
-                                f'{obj_num}_obj',
-                                f'{obj_pers}_{obj_num}_obj'
-                            }
+        variants = layout.split('_')
+        variant = ''
+        if len(variants) > 1:
+            variant = '_' + variants[1]
+        with open(f'data/temp/{preverb}_{root}_{temp_num}_({layout}){variant}.csv', 'w', encoding='utf-8') as f:
 
-                            params = screeve_params | pers_params | {'ALL'}
-                            # print(screeve[0], f'sbj: \033[32m{sbj_pers}_{sbj_num}\033[0m', f'obj: \033[34m{obj_pers}_{obj_num}\033[0m')
-                            # print(f'\033[33m{params}\033[0m')
-
-                            prefixes = make_affixes(
-                                params,
-                                'prefixes',
-                                param_priority,
-                                category_to_parameter,
-                                [36, 35]
-                            )
-
-                            roots = make_affixes(
-                                params,
-                                'roots',
-                                param_priority,
-                                category_to_parameter,
-                                [93, 33]
-                            )
-
-                            suffixes = make_affixes(
-                                params,
-                                'suffixes',
-                                param_priority,
-                                category_to_parameter,
-                                [96, 95]
-                            )
-
-                            prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
-                            root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
-                            suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
-                            word_form = f'{prefix_form}{root_form}{suffix_form}'
-
-                            if dictionary is None:
-                                if highlight == word_form:
-                                    print(f'\033[91;3m{word_form:<{cell_width}}\033[0m', end='')
-                                else:
-                                    print(f'{word_form:<{cell_width}}', end='')
-                            f.write(f'{word_form:},')
-
-                            if dictionary is not None:
-                                dictionary_entry = {
-                                    'verb': root,
-                                    'screeve': screeve[0],
-                                    'subject number': sbj_num,
-                                    'subject person': sbj_pers,
-                                    'object number': obj_num,
-                                    'object person': obj_pers,
-                                    'preverb': preverb,
-                                    'blueprint': layout
+            for screeve in screeves:
+                screeve_params = set(screeve[1].split('.'))
+                if dictionary is None:
+                    print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
+                f.write(f'{screeve[0]}\n')
+                for sbj_num in numbers:
+                    for sbj_pers in persons:
+                        for obj_num in numbers if valency > 1 else ['sg']:
+                            for obj_pers in persons if valency > 1 else ['3']:
+                                if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
+                                    if dictionary is None:
+                                        print(f'{"":{cell_width}}', end='')
+                                    f.write(',')
+                                    continue
+                                pers_params = {
+                                    f'{sbj_pers}_sbj',
+                                    f'{sbj_num}_sbj',
+                                    f'{sbj_pers}_{sbj_num}_sbj',
+                                    f'{obj_pers}_obj',
+                                    f'{obj_num}_obj',
+                                    f'{obj_pers}_{obj_num}_obj'
                                 }
-                                add_to_dictionary(dictionary, word_form, dictionary_entry)
-                    if dictionary is None:
-                        print()
-                    f.write('\n')
-            if dictionary is None:
-                print()
+
+                                params = screeve_params | pers_params | {'ALL'}
+                                # print(screeve[0], f'sbj: \033[32m{sbj_pers}_{sbj_num}\033[0m', f'obj: \033[34m{obj_pers}_{obj_num}\033[0m')
+                                # print(f'\033[33m{params}\033[0m')
+
+                                prefixes = make_affixes(
+                                    params,
+                                    'prefixes',
+                                    param_priority,
+                                    category_to_parameter,
+                                    [36, 35]
+                                )
+
+                                roots = make_affixes(
+                                    params,
+                                    'roots',
+                                    param_priority,
+                                    category_to_parameter,
+                                    [93, 33]
+                                )
+
+                                suffixes = make_affixes(
+                                    params,
+                                    'suffixes',
+                                    param_priority,
+                                    category_to_parameter,
+                                    [96, 95]
+                                )
+
+                                prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
+                                root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
+                                suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
+                                word_form = f'{prefix_form}{root_form}{suffix_form}'
+
+                                if dictionary is None:
+                                    if highlight == word_form:
+                                        print(f'\033[91;3m{word_form:<{cell_width}}\033[0m', end='')
+                                    else:
+                                        print(f'{word_form:<{cell_width}}', end='')
+                                f.write(f'{word_form:},')
+
+                                if dictionary is not None:
+                                    dictionary_entry = {
+                                        'verb': root,
+                                        'screeve': screeve[0],
+                                        'subject number': sbj_num,
+                                        'subject person': sbj_pers,
+                                        'object number': obj_num,
+                                        'object person': obj_pers,
+                                        'preverb': preverb,
+                                        'blueprint': layout
+                                    }
+                                    add_to_dictionary(dictionary, word_form, dictionary_entry)
+                        if dictionary is None:
+                            print()
+                        f.write('\n')
+                if dictionary is None:
+                    print()
 
 
 if __name__ == "__main__":

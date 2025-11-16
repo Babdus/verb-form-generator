@@ -28,15 +28,14 @@ prefixes
 გვ:1_pl_obj.direct
 [affix.1]:vers
 suffixes
-32
+30
 ევ:pres
 ე:impf_sub_circ
 ოდ:impf_sub_circ
 ი:pres
 ი:impf
 ე:subj
-ი:aor.1_sbj.direct
-ი:aor.2_sbj.direct
+ი:aor
 ე:aor
 ე:IIsubj
 ე:IIIseries
@@ -60,4 +59,3 @@ suffixes
 ან:3_pl_sbj.pres.direct
 ნ:3_pl_sbj.Iturm.direct
 ნ:3_pl_sbj.IIIsubj.direct
-თ:2_pl_obj.direct

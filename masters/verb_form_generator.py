@@ -59,6 +59,7 @@ rules = {
         (('ი:aor', 'ნენ:3_pl_sbj.direct'), 0),
         (('ე:IIsubj', 'ნენ:3_pl_sbj.direct'), 0),
         (('ა:IIsubj', 'ნენ:3_pl_sbj.direct'), 0),
+        (('ო:IIsubj', 'ნენ:3_pl_sbj.direct'), 0),
         (('ი:aor', 'ა:3_sg_sbj.aor.direct'), 0),
         (('ი:aor', 'ო:3_sg_sbj.aor.direct'), 0),
         (('ი:aor', 'ეს:3_pl_sbj.aor.direct'), 0),
@@ -89,7 +90,7 @@ def make_affixes(params, direction, param_priority, category_to_parameter, color
     for param in params:
         if param in category_to_parameter[direction]:
             for sub_param in category_to_parameter[direction][param]:
-                if sub_param['categories'] <= params:
+                if sub_param['categories'] <= params or 'FORCE' in sub_param['categories']:
                     affixes.add(sub_param['param'])
 
     for condition, result in rules[direction]:

@@ -38,7 +38,7 @@ prefixes
 უ:3_sbj.Iturm_th.inverse
 ე:IIturm_sub_circ.inverse
 suffixes
-27
+26
 ავ:Iseries
 დ:impf_sub_circ
 ი:impf
@@ -57,7 +57,6 @@ suffixes
 ენ:3_pl_sbj.pres.direct
 ეს:3_pl_sbj.aor.direct
 ნ:3_pl_sbj.IIsubj.direct
-თ:2_pl_obj.direct
 ს:3_obj.inverse
 ა:3_obj.Iturm.inverse
 ა:3_obj.IIturm.inverse

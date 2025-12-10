@@ -1,5 +1,15 @@
 import sys
 from translations import geo
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import IntegrityError
+from psycopg2.errors import UniqueViolation
+from connection import engine, VerbForm, Base
+
+
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+
 
 rules = {
     'roots': [],
@@ -86,7 +96,7 @@ persons = ['1', '2', '3']
 numbers = ['sg', 'pl']
 
 
-def make_affixes(params, direction, param_priority, category_to_parameter, colors):
+def make_affixes(params, direction, param_priority, category_to_parameter):
     affixes = set()
     for param in params:
         if param in category_to_parameter[direction]:
@@ -99,7 +109,6 @@ def make_affixes(params, direction, param_priority, category_to_parameter, color
             if result == 2:
                 continue
             affixes.remove(condition[result])
-    # print(f'\033[{colors[1]}m{affixes}\033[0m')
     affixes = list(affixes)
     affixes.sort(key=lambda x: param_priority[direction][x])
     return affixes
@@ -206,31 +215,58 @@ def make_category_to_parameter(parameters):
     return category_to_parameter
 
 
-def add_to_dictionary(dictionary, word_form, entry):
-    if word_form in dictionary:
-        entries = dictionary[word_form]
-        if entry not in entries:
-            dictionary[word_form].append(entry)
-    else:
-        dictionary[word_form] = [entry]
+def generator(verb, preverb, unsafe=False, highlight=None, printable=True):
+    return main([verb, preverb, '1'], highlight, unsafe, printable)
 
 
-def generator(verb, preverb, dictionary, highlight=None):
-    return main([verb, preverb, '1'], dictionary, highlight)
+def save_to_db(
+        word_form,
+        verb,
+        screeve,
+        subject_number,
+        subject_person,
+        object_number,
+        object_person,
+        preverb,
+        blueprint,
+        unsafe=False
+) -> bool:
+    new_verb_form = VerbForm(
+        word_form=word_form,
+        verb=verb,
+        screeve=screeve,
+        subject_person=subject_person,
+        subject_number=subject_number,
+        object_person=object_person,
+        object_number=object_number,
+        preverb=preverb,
+        blueprint=blueprint,
+    )
+    session.add(new_verb_form)
+    if unsafe:
+        return True
+    try:
+        session.commit()
+        return True
+    except IntegrityError as e:
+        session.rollback()
+        if isinstance(e.orig, UniqueViolation):
+            return False
+        else:
+            raise e
 
 
-def main(args, dictionary=None, highlight=None):
+def main(args, highlight=None, unsafe=False, printable=True):
     root = args[0]
     preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
     preverb = preverbs[0] if len(preverbs) > 0 else ""
-
-    temp_num = args[2]
 
     cell_width = len(root) + len(preverb) + 8
 
     candidate_files = choose_file(root)
     for layout, valency, roots, affixes in candidate_files:
-        print(f'\033[37;1m{preverb}\033[32;1m{root}\033[0m\n')
+        if printable:
+            print(f'\033[37;1m{preverb}\033[32;1m{root}\033[0m\n')
 
         valency = int(valency)
 
@@ -239,92 +275,71 @@ def main(args, dictionary=None, highlight=None):
         category_to_parameter = make_category_to_parameter(parameters)
         screeves = parameters['screeves']
 
-        variants = layout.split('_')
-        variant = ''
-        if len(variants) > 1:
-            variant = '_' + variants[1]
-        with open(f'data/temp/{preverb}_{root}_{temp_num}_({layout}){variant}.csv', 'w', encoding='utf-8') as f:
+        for screeve in screeves:
+            screeve_params = set(screeve[1].split('.'))
+            if printable:
+                print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
+            for sbj_num in numbers:
+                for sbj_pers in persons:
+                    for obj_num in numbers if valency > 1 else ['sg']:
+                        for obj_pers in persons if valency > 1 else ['3']:
+                            if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
+                                if printable:
+                                    print(f'{"":{cell_width}}', end='')
+                                continue
+                            pers_params = {
+                                f'{sbj_pers}_sbj',
+                                f'{sbj_num}_sbj',
+                                f'{sbj_pers}_{sbj_num}_sbj',
+                                f'{obj_pers}_obj',
+                                f'{obj_num}_obj',
+                                f'{obj_pers}_{obj_num}_obj'
+                            }
 
-            for screeve in screeves:
-                screeve_params = set(screeve[1].split('.'))
-                if dictionary is None:
-                    print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
-                f.write(f'{screeve[0]}\n')
-                for sbj_num in numbers:
-                    for sbj_pers in persons:
-                        for obj_num in numbers if valency > 1 else ['sg']:
-                            for obj_pers in persons if valency > 1 else ['3']:
-                                if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
-                                    if dictionary is None:
-                                        print(f'{"":{cell_width}}', end='')
-                                    f.write(',')
-                                    continue
-                                pers_params = {
-                                    f'{sbj_pers}_sbj',
-                                    f'{sbj_num}_sbj',
-                                    f'{sbj_pers}_{sbj_num}_sbj',
-                                    f'{obj_pers}_obj',
-                                    f'{obj_num}_obj',
-                                    f'{obj_pers}_{obj_num}_obj'
-                                }
+                            params = screeve_params | pers_params | {'ALL'}
 
-                                params = screeve_params | pers_params | {'ALL'}
-                                # print(screeve[0], f'sbj: \033[32m{sbj_pers}_{sbj_num}\033[0m', f'obj: \033[34m{obj_pers}_{obj_num}\033[0m')
-                                # print(f'\033[33m{params}\033[0m')
+                            prefixes = make_affixes(params, 'prefixes', param_priority, category_to_parameter)
+                            roots = make_affixes(params, 'roots', param_priority, category_to_parameter)
+                            suffixes = make_affixes(params, 'suffixes', param_priority, category_to_parameter)
 
-                                prefixes = make_affixes(
-                                    params,
-                                    'prefixes',
-                                    param_priority,
-                                    category_to_parameter,
-                                    [36, 35]
-                                )
+                            prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
+                            root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
+                            suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
+                            word_form = f'{prefix_form}{root_form}{suffix_form}'
 
-                                roots = make_affixes(
-                                    params,
-                                    'roots',
-                                    param_priority,
-                                    category_to_parameter,
-                                    [93, 33]
-                                )
+                            color_start = ''
+                            color_end = ''
 
-                                suffixes = make_affixes(
-                                    params,
-                                    'suffixes',
-                                    param_priority,
-                                    category_to_parameter,
-                                    [96, 95]
-                                )
+                            response = save_to_db(
+                                word_form=word_form,
+                                verb=root,
+                                screeve=screeve[0],
+                                subject_person=int(sbj_pers),
+                                subject_number=sbj_num,
+                                object_person=int(obj_pers),
+                                object_number=obj_num,
+                                preverb=preverb,
+                                blueprint=layout,
+                                unsafe=unsafe
+                            )
+                            if not response:
+                                color_start = '\033[90;3m'
+                                color_end = '\033[0m'
 
-                                prefix_form = "".join([morpheme.split(':')[0] for morpheme in prefixes])
-                                root_form = "".join([morpheme.split(':')[0] for morpheme in roots])
-                                suffix_form = "".join([morpheme.split(':')[0] for morpheme in suffixes])
-                                word_form = f'{prefix_form}{root_form}{suffix_form}'
-
-                                if dictionary is None:
-                                    if highlight == word_form:
-                                        print(f'\033[91;3m{word_form:<{cell_width}}\033[0m', end='')
-                                    else:
-                                        print(f'{word_form:<{cell_width}}', end='')
-                                f.write(f'{word_form:},')
-
-                                if dictionary is not None:
-                                    dictionary_entry = {
-                                        'verb': root,
-                                        'screeve': screeve[0],
-                                        'subject number': sbj_num,
-                                        'subject person': sbj_pers,
-                                        'object number': obj_num,
-                                        'object person': obj_pers,
-                                        'preverb': preverb,
-                                        'blueprint': layout
-                                    }
-                                    add_to_dictionary(dictionary, word_form, dictionary_entry)
-                        if dictionary is None:
-                            print()
-                        f.write('\n')
-                if dictionary is None:
-                    print()
+                            if highlight == word_form:
+                                color_start = '\033[91;3m'
+                                color_end = '\033[0m'
+                            if printable:
+                                print(f'{color_start}{word_form:<{cell_width}}{color_end}', end='')
+                    if printable:
+                        print()
+            if printable:
+                print()
+    if unsafe:
+        try:
+            session.commit()
+        except IntegrityError as e:
+            session.rollback()
 
 
 if __name__ == "__main__":

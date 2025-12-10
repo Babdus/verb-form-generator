@@ -1,6 +1,6 @@
-import json
 import sys
 import verb_form_generator
+import time
 
 
 preverbs = [
@@ -10,6 +10,7 @@ preverbs = [
 
 
 def main(args):
+    start_time = time.time()
     with open('data/layout_type_index.txt', 'r', encoding='utf-8') as f:
         lines = (line.strip() for line in f if line.strip())
         line_iter = iter(lines)
@@ -23,16 +24,10 @@ def main(args):
         except StopIteration:
             raise ValueError("Unexpected end of file while parsing.")
 
-    with open('data/dictionary.json', 'r', encoding='utf-8') as f:
-        dictionary = json.load(f)
-
     for verb in result_verbs:
         for preverb in preverbs:
-            verb_form_generator.generator(verb, preverb, dictionary)
-
-    with open('data/dictionary.json', 'w', encoding='utf-8') as f:
-        json.dump(dictionary, f, sort_keys=True, ensure_ascii=False, indent=4)
-
+            verb_form_generator.generator(verb, preverb, unsafe=True, printable=False)
+    print(f'{time.time() - start_time} seconds')
 
 if __name__ == '__main__':
     main(sys.argv[1:])

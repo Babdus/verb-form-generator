@@ -1,21 +1,21 @@
 screeves
 16
-fut2, Iseries.pres.vers.direct
-fut2_prfv, Iseries.pres.vers.prfv.direct
-cond2, Iseries.impf.vers.impf_sub_circ.direct
-cond2_prfv, Iseries.impf.vers.impf_sub_circ.prfv.direct
-fut2_subj, Iseries.subj.vers.impf_sub_circ.direct
-fut2_subj_prfv, Iseries.subj.vers.impf_sub_circ.prfv.direct
-aor2, IIseries.aor.vers.direct
-aor2_prfv, IIseries.aor.vers.prfv.direct
-IIsubj2, IIseries.IIsubj.vers.direct
-IIsubj2_prfv, IIseries.IIsubj.vers.prfv.direct
-Iturm, IIIseries.Iturm.direct
-Iturm_prfv, IIIseries.Iturm.prfv.direct
-IIturm, IIIseries.IIturm.IIturm_sub_circ.direct
-IIturm_prfv, IIIseries.IIturm.IIturm_sub_circ.prfv.direct
-IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.direct
-IIIsubj_prfv, IIIseries.IIIsubj.IIturm_sub_circ.prfv.direct
+fut2, Iseries.pres.vers.direct, 1
+fut2_prfv, Iseries.pres.vers.prfv.direct, 4
+cond2, Iseries.impf.vers.impf_sub_circ.direct, 2
+cond2_prfv, Iseries.impf.vers.impf_sub_circ.prfv.direct, 5
+fut2_subj, Iseries.subj.vers.impf_sub_circ.direct, 3
+fut2_subj_prfv, Iseries.subj.vers.impf_sub_circ.prfv.direct, 6
+aor2, IIseries.aor.vers.direct, 7
+aor2_prfv, IIseries.aor.vers.prfv.direct, 7
+IIsubj2, IIseries.IIsubj.vers.direct, 8
+IIsubj2_prfv, IIseries.IIsubj.vers.prfv.direct, 8
+Iturm, IIIseries.Iturm.direct, 9
+Iturm_prfv, IIIseries.Iturm.prfv.direct, 9
+IIturm, IIIseries.IIturm.IIturm_sub_circ.direct, 10
+IIturm_prfv, IIIseries.IIturm.IIturm_sub_circ.prfv.direct, 10
+IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.direct, 11
+IIIsubj_prfv, IIIseries.IIIsubj.IIturm_sub_circ.prfv.direct, 11
 roots
 7
 [root.1]:Iseries

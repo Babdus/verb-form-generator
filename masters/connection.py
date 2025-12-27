@@ -17,6 +17,7 @@ class VerbForm(Base):
     word_form = Column(String(128))
     verb = Column(String(128))
     screeve = Column(String(128))
+    trad_screeve = Column(String(128))
     subject_number = Column(String(8))
     subject_person = Column(Integer)
     object_number = Column(String(8))

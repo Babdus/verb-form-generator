@@ -1,4 +1,6 @@
 import sys
+
+from masters.translations import trad_screeves
 from translations import geo
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
@@ -223,6 +225,7 @@ def save_to_db(
         word_form,
         verb,
         screeve,
+        trad_screeve,
         subject_number,
         subject_person,
         object_number,
@@ -235,6 +238,7 @@ def save_to_db(
         word_form=word_form,
         verb=verb,
         screeve=screeve,
+        trad_screeve=trad_screeve,
         subject_person=subject_person,
         subject_number=subject_number,
         object_person=object_person,
@@ -280,6 +284,7 @@ def main(args, highlight=None, unsafe=False, printable=True):
             screeve_params = set(screeve[1].split('.'))
             if printable:
                 print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
+                print(f'\033[91;2;3m{trad_screeves[screeve[2]]}\033[0m')
             for sbj_num in numbers:
                 for sbj_pers in persons:
                     for obj_num in numbers if valency > 1 else ['sg']:
@@ -316,6 +321,7 @@ def main(args, highlight=None, unsafe=False, printable=True):
                                     word_form=word_form,
                                     verb=root,
                                     screeve=screeve[0],
+                                    trad_screeve=trad_screeves[screeve[2]],
                                     subject_person=int(sbj_pers),
                                     subject_number=sbj_num,
                                     object_person=int(obj_pers),

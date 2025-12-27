@@ -1,14 +1,14 @@
 screeves
 9
-pres, Iseries.pres.nonvers.direct
-fut2, Iseries.pres.vers.direct
-impf, Iseries.impf.nonvers.impf_sub_circ.direct
-cond2, Iseries.impf.vers.impf_sub_circ.direct
-subj, Iseries.subj.nonvers.impf_sub_circ.direct
-fut2_subj, Iseries.subj.vers.impf_sub_circ.direct
-Iturm, IIIseries.Iturm.inverse
-IIturm, IIIseries.IIturm.IIturm_sub_circ.inverse
-IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.inverse
+pres, Iseries.pres.nonvers.direct, 1
+fut2, Iseries.pres.vers.direct, 4
+impf, Iseries.impf.nonvers.impf_sub_circ.direct, 2
+cond2, Iseries.impf.vers.impf_sub_circ.direct, 5
+subj, Iseries.subj.nonvers.impf_sub_circ.direct, 3
+fut2_subj, Iseries.subj.vers.impf_sub_circ.direct, 6
+Iturm, IIIseries.Iturm.inverse, 9
+IIturm, IIIseries.IIturm.IIturm_sub_circ.inverse, 10
+IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.inverse, 11
 roots
 1
 [root]:ALL

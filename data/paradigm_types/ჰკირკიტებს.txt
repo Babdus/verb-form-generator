@@ -1,8 +1,8 @@
 screeves
 3
-fut, Iseries.pres.nonvers.prfv.direct
-cond, Iseries.impf.nonvers.impf_sub_circ.prfv.direct
-fut_subj, Iseries.subj.nonvers.impf_sub_circ.prfv.direct
+fut, Iseries.pres.nonvers.prfv.direct, 1
+cond, Iseries.impf.nonvers.impf_sub_circ.prfv.direct, 2
+fut_subj, Iseries.subj.nonvers.impf_sub_circ.prfv.direct, 3
 roots
 1
 [root.1]:ALL

@@ -53,12 +53,12 @@ suffixes
 ა:3_sbj.Iturm.direct
 ა:3_sbj.IIturm.direct
 ა:3_sg_sbj.IIturm_impf.direct
-ა:3_sg_sbj.IIIsubj_impf.direct
 ვარ:1_sbj.Iturm.direct
 ხარ:2_sbj.Iturm.direct
 თ:pl_sbj.direct
 ნენ:3_pl_sbj.direct
 ან:3_pl_sbj.pres.direct
+ნ:3_pl_sbj.IIsubj.direct
 ნ:3_pl_sbj.Iturm.direct
 ნ:3_pl_sbj.IIIsubj.direct
 თ:2_pl_obj.direct

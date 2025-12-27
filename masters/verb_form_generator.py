@@ -259,6 +259,7 @@ def save_to_db(
 def main(args, highlight=None, unsafe=False, printable=True):
     root = args[0]
     preverbs = [args[1]] if len(args) > 1 and args[1] != 'nopv' else []
+    no_save = '--no-save' in args
     preverb = preverbs[0] if len(preverbs) > 0 else ""
 
     cell_width = len(root) + len(preverb) + 8
@@ -310,21 +311,22 @@ def main(args, highlight=None, unsafe=False, printable=True):
                             color_start = ''
                             color_end = ''
 
-                            response = save_to_db(
-                                word_form=word_form,
-                                verb=root,
-                                screeve=screeve[0],
-                                subject_person=int(sbj_pers),
-                                subject_number=sbj_num,
-                                object_person=int(obj_pers),
-                                object_number=obj_num,
-                                preverb=preverb,
-                                blueprint=layout,
-                                unsafe=unsafe
-                            )
-                            if not response:
-                                color_start = '\033[90;3m'
-                                color_end = '\033[0m'
+                            if not no_save:
+                                response = save_to_db(
+                                    word_form=word_form,
+                                    verb=root,
+                                    screeve=screeve[0],
+                                    subject_person=int(sbj_pers),
+                                    subject_number=sbj_num,
+                                    object_person=int(obj_pers),
+                                    object_number=obj_num,
+                                    preverb=preverb,
+                                    blueprint=layout,
+                                    unsafe=unsafe
+                                )
+                                if not response:
+                                    color_start = '\033[90;3m'
+                                    color_end = '\033[0m'
 
                             if highlight == word_form:
                                 color_start = '\033[91;3m'
@@ -335,7 +337,7 @@ def main(args, highlight=None, unsafe=False, printable=True):
                         print()
             if printable:
                 print()
-    if unsafe:
+    if unsafe and not no_save:
         try:
             session.commit()
         except IntegrityError as e:

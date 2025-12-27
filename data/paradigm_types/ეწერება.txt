@@ -33,7 +33,7 @@ prefixes
 გვ:1_pl_obj.direct
 [affix.1]:vers
 suffixes
-35
+34
 ებ:Iseries
 ოდ:impf_sub_circ
 ი:pres
@@ -58,7 +58,6 @@ suffixes
 ა:3_sbj.Iturm.direct
 ა:3_sbj.IIturm.direct
 ა:3_sg_sbj.IIturm_impf.direct
-ა:3_sg_sbj.IIIsubj_impf.direct
 ვარ:1_sbj.Iturm.direct
 ხარ:2_sbj.Iturm.direct
 თ:pl_sbj.direct

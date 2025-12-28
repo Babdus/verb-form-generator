@@ -8,6 +8,10 @@ preverbs = [
     'შემო', 'ჩამო', 'ამო', 'წამო', 'გადმო', 'აღმო', 'განმო', 'მიმო', 'შთამო', 'წარმო', 'გარდამო'
 ]
 
+simple_preverbs = [
+    'და'
+]
+
 
 def main(args):
     start_time = time.time()
@@ -25,7 +29,7 @@ def main(args):
             raise ValueError("Unexpected end of file while parsing.")
 
     for verb in result_verbs:
-        for preverb in preverbs:
+        for preverb in simple_preverbs: # TODO change to preverbs
             verb_form_generator.generator(verb, preverb, unsafe=True, printable=False)
     print(f'{time.time() - start_time} seconds')
 

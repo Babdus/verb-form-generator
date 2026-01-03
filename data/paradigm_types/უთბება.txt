@@ -18,20 +18,21 @@ IIIsubj_impf, IIIseries.IIIsubj_impf.IIturm_impf_sub_circ.direct, 11
 IIIsubj_impf_pv, IIIseries.IIIsubj_impf.IIturm_impf_sub_circ.prfv.direct, 11
 roots
 1
-[root.1]:ALL
+[root]:ALL
 prefixes
-7
+8
 [preverb]:prfv
 ვ:1_sbj.direct
 მ:1_sg_obj.direct
 გ:2_obj.direct
-[affix.2]:3_obj.IIIseries.direct
+[affix.3]:3_obj.IIIseries.direct
 გვ:1_pl_obj.direct
-[affix.1]:vers
+[affix.2]:vers.direct
+[affix.1]:vers.3_obj.direct
 suffixes
 27
 ებ:Iseries
-ებ:IIIseries
+ობ:IIIseries
 ოდ:impf_sub_circ
 ი:pres
 ი:impf

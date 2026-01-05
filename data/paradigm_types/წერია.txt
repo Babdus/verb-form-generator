@@ -1,0 +1,46 @@
+screeves
+7
+pres, Iseries.pres.nonvers.direct, 1
+fut2, Iseries.pres.vers.direct, 4
+aor2, IIseries.aor.vers.direct, 7
+IIsubj2, IIseries.IIsubj.vers.direct, 8
+Iturm, IIIseries.Iturm.direct, 9
+IIturm, IIIseries.IIturm.IIturm_sub_circ.direct, 10
+IIIsubj, IIIseries.IIIsubj.IIturm_sub_circ.direct, 11
+roots
+1
+[root.1]:ALL
+prefixes
+2
+ვ:1_sbj.direct
+[affix.1]:vers.direct
+suffixes
+28
+ებ:IIIseries
+ებ:Iseries.vers
+ი:pres.nonvers
+ი:pres.vers
+ე:aor
+ო:IIsubj
+ულ:IIIseries
+იყ:IIturm_sub_circ
+ავი:IIturm.1_sbj.direct
+ავი:IIturm.2_sbj.direct
+ო:IIturm.3_sg_sbj.direct
+ვ:IIturm.3_pl_sbj.direct
+ო:IIIsubj
+ს:3_sg_sbj.direct
+ა:3_sg_sbj.pres.direct
+ა:3_sg_sbj.aor.direct
+ა:3_sbj.Iturm.direct
+ა:3_sbj.IIturm.direct
+ვარ:1_sbj.pres.nonvers.direct
+ხარ:2_sbj.pres.nonvers.direct
+ვარ:1_sbj.Iturm.direct
+ხარ:2_sbj.Iturm.direct
+თ:pl_sbj.direct
+ნენ:3_pl_sbj.direct
+ან:3_pl_sbj.pres.direct
+ნ:3_pl_sbj.IIsubj.direct
+ნ:3_pl_sbj.Iturm.direct
+ნ:3_pl_sbj.IIIsubj.direct

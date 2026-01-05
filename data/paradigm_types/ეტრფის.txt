@@ -1,0 +1,27 @@
+screeves
+3
+fut2, Iseries.pres.vers.direct, 4
+cond2, Iseries.impf.vers.impf_sub_circ.direct, 5
+fut2_subj, Iseries.subj.vers.impf_sub_circ.direct, 6
+roots
+1
+[root.1]:ALL
+prefixes
+5
+ვ:1_sbj.direct
+მ:1_sg_obj.direct
+გ:2_obj.direct
+გვ:1_pl_obj.direct
+[affix.1]:vers.direct
+suffixes
+10
+ი:pres.vers
+ოდ:vers.impf_sub_circ
+ი:impf
+ე:subj
+ს:3_sg_sbj.direct
+ა:3_sg_sbj.impf.direct
+ა:3_sg_sbj.aor.direct
+თ:pl_sbj.direct
+ნენ:3_pl_sbj.direct
+ან:3_pl_sbj.pres.direct

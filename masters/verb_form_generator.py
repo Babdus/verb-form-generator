@@ -21,6 +21,7 @@ rules = {
         (('ი:Iturm.inverse', 'უ:3_sbj.Iturm.inverse'), 0),
         (('ი:Iturm_th.inverse', 'უ:3_sbj.Iturm_th.inverse'), 0),
         (('ი:vers.direct', 'უ:vers.3_obj.direct'), 0),
+        (('ი:nonvers.direct', 'უ:nonvers.3_obj.direct'), 0),
         (('ი:vers.direct', 'ი:vers.3_obj.direct'), 0),
         (('ა:vers.direct', 'ა:vers.3_obj.direct'), 0),
         (('ვ:1_sbj.direct', 'ჰ:3_obj.direct'), 1),

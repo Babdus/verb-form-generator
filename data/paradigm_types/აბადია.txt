@@ -22,7 +22,7 @@ prefixes
 [affix.2]:vers
 [affix.1]:nonvers.direct
 suffixes
-29
+30
 ებ:Iseries.vers
 ებ:IIIseries
 ი:pres.nonvers
@@ -38,6 +38,7 @@ suffixes
 ე:IIIsubj_impf
 ს:3_sg_sbj.direct
 ა:3_sg_sbj.pres.direct
+ა:3_sg_sbj.impf.direct
 ა:3_sg_sbj.aor.direct
 ა:3_sbj.Iturm.direct
 ა:3_sbj.IIturm.direct

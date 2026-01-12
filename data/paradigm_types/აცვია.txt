@@ -10,8 +10,11 @@ Iturm, IIIseries.Iturm.direct, 9
 IIturm_impf, IIIseries.IIturm_impf.IIturm_impf_sub_circ.direct, 10
 IIIsubj_impf, IIIseries.IIIsubj_impf.IIturm_impf_sub_circ.direct, 11
 roots
-1
-[root.1]:ALL
+4
+[root.1]:Iseries.nonvers
+[root.1]:IIseries
+[root.2]:Iseries.vers
+[root.2]:IIIseries
 prefixes
 7
 ვ:1_sbj.direct
@@ -22,19 +25,15 @@ prefixes
 [affix.2]:vers
 [affix.1]:nonvers.direct
 suffixes
-35
-ევ:pres
-ე:impf_sub_circ
-ევ:Iturm
-ე:IIturm_impf_sub_circ
+31
+ებ:Iseries.vers
 ი:pres.nonvers
 ი:pres.vers
-ი:IIseries
 ოდ:vers.impf_sub_circ
 ი:impf
 ე:subj
-ე:aor
-ო:IIsubj
+ი:aor
+ა:IIsubj
 ი:Iturm
 ოდ:IIturm_impf_sub_circ
 ი:IIturm_impf

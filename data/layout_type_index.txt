@@ -73,5 +73,6 @@
 წერია:1=წერია:წერ,ე.pref
 უწერია:2=უწერია:წერ,უ.pref,ი.pref,ე.pref,ს.pref
 ეტრფის:2=ეტრფის:ტრფ,ე.pref
-აბადია:2=აბადია:ბად,ა.pref,ე.pref,ჰ.pref;აბარია:ბარ,ა.pref,ე.pref,ჰ.pref;აშავია:შავ,ა.pref,ე.pref,ჰ.pref
+აბადია:2=აბადია:ბად,ა.pref,ე.pref,ჰ.pref;აბარია:ბარ,ა.pref,ე.pref,ჰ.pref;აშავია:შავ,ა.pref,ე.pref,ჰ.pref;აჩაჩია:ჩაჩ,ა.pref,ე.pref,ს.pref
 ამჩნევია:2=ამჩნევია:მჩნ,ა.pref,ე.pref,.pref
+აცვია:2=აცვია:ცვ,ცმ,ა.pref,ე.pref,ს.pref

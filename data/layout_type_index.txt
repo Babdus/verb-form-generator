@@ -76,3 +76,4 @@
 აბადია:2=აბადია:ბად,ა.pref,ე.pref,ჰ.pref;აბარია:ბარ,ა.pref,ე.pref,ჰ.pref;აშავია:შავ,ა.pref,ე.pref,ჰ.pref;აჩაჩია:ჩაჩ,ა.pref,ე.pref,ს.pref;აჭედია:ჭედ,ა.pref,ე.pref,ს.pref
 ამჩნევია:2=ამჩნევია:მჩნ,ა.pref,ე.pref,.pref;ახვევია:ხვ,ა.pref,ე.pref,ჰ.pref
 აცვია:2=აცვია:ცვ,ცმ,ა.pref,ე.pref,ს.pref
+ახურავს:2=ახურავს:ხურ,ა.pref,ე.pref,ჰ.pref

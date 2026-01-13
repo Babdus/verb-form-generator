@@ -51,6 +51,7 @@ rules = {
         (('ნენ:3_pl_sbj.direct', 'ენ:3_pl_sbj.pres.vers.direct'), 0),
         (('ან:3_pl_sbj.pres.direct', 'ენ:3_pl_sbj.pres.vers.direct'), 0),
         (('ნენ:3_pl_sbj.direct', 'ან:3_pl_sbj.pres.direct'), 0),
+        (('ნენ:3_pl_sbj.direct', 'ს:3_pl_sbj.pres_th.direct'), 0),
         (('ნენ:3_pl_sbj.direct', 'ეს:3_pl_sbj.aor.direct'), 0),
         (('ნენ:3_pl_sbj.direct', 'ნ:3_pl_sbj.IIsubj.direct'), 0),
         (('ნენ:3_pl_sbj.direct', 'ნ:3_pl_sbj.Iturm.direct'), 0),

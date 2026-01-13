@@ -26,6 +26,8 @@ rules = {
         (('ა:vers.direct', 'ა:vers.3_obj.direct'), 0),
         (('ვ:1_sbj.direct', 'ჰ:3_obj.direct'), 1),
         (('ვ:1_sbj.direct', 'ს:3_obj.direct'), 1),
+        (('ვ:1_sbj.direct', 'ჰ:3_obj.nonvers.direct'), 1),
+        (('ვ:1_sbj.direct', 'ს:3_obj.nonvers.direct'), 1),
         (('ვ:1_sbj.direct', 'ჰ:3_obj.IIIseries.direct'), 1),
         (('ვ:1_sbj.direct', 'ს:3_obj.IIIseries.direct'), 1)
     ],

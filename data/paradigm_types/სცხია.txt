@@ -1,0 +1,57 @@
+screeves
+9
+pres, Iseries.pres.nonvers.direct, 1
+fut2, Iseries.pres.vers.direct, 4
+cond2, Iseries.impf.vers.impf_sub_circ.direct, 5
+fut2_subj, Iseries.subj.vers.impf_sub_circ.direct, 6
+aor2, IIseries.aor.vers.direct, 7
+IIsubj2, IIseries.IIsubj.vers.direct, 8
+Iturm, IIIseries.Iturm.direct, 9
+IIturm_impf, IIIseries.IIturm_impf.IIturm_impf_sub_circ.direct, 10
+IIIsubj_impf, IIIseries.IIIsubj_impf.IIturm_impf_sub_circ.direct, 11
+roots
+1
+[root.1]:ALL
+prefixes
+7
+ვ:1_sbj.direct
+მ:1_sg_obj.direct
+გ:2_obj.direct
+გვ:1_pl_obj.direct
+[affix.2]:3_obj.IIIseries.direct
+[affix.1]:vers
+[affix.2]:3_obj.nonvers.direct
+suffixes
+32
+ებ:Iseries.vers
+ებ:IIIseries
+ი:pres.nonvers
+ი:pres.vers
+ოდ:vers.impf_sub_circ
+ი:impf
+ე:subj
+ე:aor
+ო:IIsubj
+ი:Iturm
+ოდ:IIturm_impf_sub_circ
+ი:IIturm_impf
+ე:IIIsubj_impf
+ს:3_sg_sbj.direct
+ა:3_sg_sbj.pres.direct
+ა:3_sg_sbj.impf.direct
+ო:3_sg_sbj.aor.direct
+ა:3_sbj.Iturm.direct
+ა:3_sbj.IIturm.direct
+ა:3_sg_sbj.IIturm_impf.direct
+ვარ:1_sbj.pres.nonvers.direct
+ხარ:2_sbj.pres.nonvers.direct
+ვარ:1_sbj.Iturm.direct
+ხარ:2_sbj.Iturm.direct
+თ:pl_sbj.direct
+ნენ:3_pl_sbj.direct
+ან:3_pl_sbj.pres.direct
+ნ:3_pl_sbj.IIsubj.direct
+ნ:3_pl_sbj.Iturm.direct
+ნ:3_pl_sbj.IIIsubj.direct
+თ:2_pl_obj.direct
+თ:3_pl_obj.3_sg_sbj.direct

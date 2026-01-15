@@ -34,6 +34,7 @@ rules = {
     'suffixes': [
         (('ოდ:impf_sub_circ', 'დ:fut2_circ.impf_sub_circ'), 0),
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.pres.direct'), 0),
+        (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.pres.vers.direct'), 0),
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.impf.direct'), 0),
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.cond.direct'), 0),
         (('ს:3_sg_sbj.direct', 'ა:3_sg_sbj.IIturm_impf.direct'), 0),
@@ -60,7 +61,9 @@ rules = {
         (('ნენ:3_pl_sbj.direct', 'ნ:3_pl_sbj.IIIsubj.direct'), 0),
         (('ი:IIIseries', 'ოდ:IIturm_impf_sub_circ'), 0),
         (('ი:pres', 'ა:3_sg_sbj.pres.direct'), 0),
+        (('ი:pres', 'ა:3_sg_sbj.pres.vers.direct'), 0),
         (('ი:pres.vers', 'ა:3_sg_sbj.pres.direct'), 0),
+        (('ი:pres.vers', 'ა:3_sg_sbj.pres.vers.direct'), 0),
         (('ი:impf', 'ა:3_sg_sbj.impf.direct'), 0),
         (('ი:cond', 'ა:3_sg_sbj.cond.direct'), 0),
         (('ი:IIturm_impf', 'ა:3_sg_sbj.IIturm_impf.direct'), 0),

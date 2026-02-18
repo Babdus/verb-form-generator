@@ -13,13 +13,14 @@ roots
 1
 [root.1]:ALL
 prefixes
-6
+7
 ვ:1_sbj.direct
 მ:1_sg_obj.direct
 გ:2_obj.direct
 გვ:1_pl_obj.direct
 [affix.2]:3_obj.IIIseries.direct
 [affix.1]:vers
+[affix.2]:3_obj.nonvers.direct
 suffixes
 33
 ავ:Iseries.nonvers

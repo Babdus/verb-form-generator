@@ -293,10 +293,10 @@ def main(args, highlight=None, unsafe=False, printable=True):
             if printable:
                 print(f'\033[33;1m{geo[screeve[0]]}\033[0m')
                 print(f'\033[91;2;3m{trad_screeves[screeve[2]]}\033[0m')
-            for sbj_num in numbers:
-                for sbj_pers in persons:
-                    for obj_num in numbers if valency > 1 else ['sg']:
-                        for obj_pers in persons if valency > 1 else ['3']:
+            for sbj_num in numbers if valency != -1 else ['sg']:
+                for sbj_pers in persons if valency != -1 else ['3']:
+                    for obj_num in numbers if valency != 1 else ['sg']:
+                        for obj_pers in persons if valency != 1 else ['3']:
                             if sbj_pers in {'1', '2'} and sbj_pers == obj_pers:
                                 if printable:
                                     print(f'{"":{cell_width}}', end='')

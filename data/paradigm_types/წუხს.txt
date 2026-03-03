@@ -15,9 +15,8 @@ roots
 1
 [root]:ALL
 prefixes
-9
+8
 ვ:1_sbj.direct
-ვ:1_obj.inverse
 მ:1_sg_sbj.inverse
 გ:2_sbj.inverse
 გვ:1_pl_sbj.inverse

@@ -28,9 +28,16 @@ def main(args):
         except StopIteration:
             raise ValueError("Unexpected end of file while parsing.")
 
+    count = 0
+    last_time = start_time
     for verb in result_verbs:
-        for preverb in simple_preverbs: # TODO change to preverbs
+        print(count, verb)
+        for preverb in preverbs:
             verb_form_generator.generator(verb, preverb, unsafe=True, printable=False)
+        count += 1
+        curr_time = time.time()
+        print(f'\r{count} {verb} {round(curr_time - last_time, 2)}s')
+        last_time = curr_time
     print(f'{time.time() - start_time} seconds')
 
 if __name__ == '__main__':

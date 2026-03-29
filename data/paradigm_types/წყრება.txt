@@ -41,7 +41,7 @@ suffixes
 ე:subj
 ი:aor
 ე:IIsubj
-ალ:IIIseries
+[affix.1]:IIIseries
 იყ:IIturm_sub_circ
 ავი:IIturm.1_sbj.direct
 ავი:IIturm.2_sbj.direct

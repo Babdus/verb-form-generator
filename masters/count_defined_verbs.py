@@ -7,9 +7,12 @@ def main():
         for line in line_iter:
             layout_with_valency, verbs = line.split('=')
             layout, valency = layout_with_valency.split(':')
-            verbs = list(map(lambda x: x.split(':')[0], verbs.split(';')))
+            verbs = sorted(list(map(lambda x: (layout, x.split(':')[0]), verbs.split(';'))))
             all_verbs += verbs
-    # print(all_verbs)
+    all_verbs = sorted(all_verbs, key=lambda x: x[0])
+    for verb in all_verbs:
+        print(f'{verb[0]},{verb[1]}')
+    # print(sorted(all_verbs))
     print(len(all_verbs))
 
 

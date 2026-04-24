@@ -37,7 +37,7 @@ def split_line(line):
     left_words.reverse()
     right_words = [('+'.join(word.split('+')[:-1]), word.split('+')[-1]) for word in parts[2].split(' ') if '+' in word]
     query_word = ('+'.join(parts[1].split('+')[:-1]), parts[1].split('+')[-1])
-    return left_words, right_words, query_word
+    return left_words, right_words, query_word, int(parts[3])
 
 
 def store_pos(file_path):
@@ -46,7 +46,7 @@ def store_pos(file_path):
         i = 0
         for line in f:
             try:
-                left_words, right_words, query_word = split_line(line)
+                left_words, right_words, query_word, index = split_line(line)
                 parts_of_speech.add(query_word[1])
                 parts_of_speech |= {word[1] for word in left_words}
                 parts_of_speech |= {word[1] for word in right_words}
@@ -79,6 +79,10 @@ def main(args):
     optional_word_forms_path = args[1]
     optional_word_forms = get_optional_word_forms(optional_word_forms_path)
 
+    index_to_start = 0
+    if len(args) > 2:
+        index_to_start = int(args[2])
+
     # store_pos(file_path)
     parts_of_speech = get_pos()
     print(parts_of_speech)
@@ -89,7 +93,9 @@ def main(args):
             try:
                 print(f'\033[92m{j}, \033[94m{time.time() - start_time:.2f}\033[0m', end='\r')
                 j += 1
-                left_words, right_words, query_word = split_line(line)
+                left_words, right_words, query_word, index = split_line(line)
+                if index < index_to_start:
+                    continue
 
                 query_pos_id = parts_of_speech[query_word[1]]
 
@@ -124,7 +130,7 @@ def main(args):
                 concordance.contexts.append(right_context)
                 session.add(concordance)
                 session.commit()
-            except IntegrityError as e:
+            except Exception as e:
                 session.rollback()
                 print()
                 print(f'\033[96m{line}\033[0m')

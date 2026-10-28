@@ -45,34 +45,38 @@ def main(args):
     list_matching_layouts = []
 
     for i, screeves in enumerate(screeves_to_layouts):
-        print(i, screeves_to_layouts[screeves])
+        # print(i, screeves_to_layouts[screeves])
         list_matching_layouts.append({
             'screeves': screeves,
             'verbs': screeves_to_layouts[screeves]
         })
 
-    print(list_matching_layouts)
+    # print(list_matching_layouts)
 
-    for i in range(len(list_matching_layouts)):
-        for j in range(i+1, len(list_matching_layouts)):
-            print(i, list_matching_layouts[i]['verbs'][0], j, list_matching_layouts[j]['verbs'][0])
-            print(f"\033[91;1m{list_matching_layouts[i]['screeves']}\033[0m")
-            print(f"\033[92;1m{list_matching_layouts[j]['screeves']}\033[0m")
-
-            screeves_1_as_string = "\n".join(list_matching_layouts[i]['screeves'])
-            screeves_2_as_string = "\n".join(list_matching_layouts[j]['screeves'])
-
-            print(f"\033[31m{screeves_1_as_string}\033[0m")
-            print(f"\033[32m{screeves_2_as_string}\033[0m")
-
-            matcher = SequenceMatcher(None, screeves_1_as_string, screeves_2_as_string)
-            matching_blocks = matcher.get_matching_blocks()
-            print(matching_blocks)
-            for block in matching_blocks:
-                pass
-
-            break
-        break
+    with open('data/grouped_layouts_by_screeves.txt', 'w', encoding='utf-8') as f:
+        for layout_type in list_matching_layouts:
+            f.write(', '.join(layout_type['verbs']) + '\n')
+    #
+    # for i in range(len(list_matching_layouts)):
+    #     for j in range(i+1, len(list_matching_layouts)):
+    #         print(i, list_matching_layouts[i]['verbs'][0], j, list_matching_layouts[j]['verbs'][0])
+    #         print(f"\033[91;1m{list_matching_layouts[i]['screeves']}\033[0m")
+    #         print(f"\033[92;1m{list_matching_layouts[j]['screeves']}\033[0m")
+    #
+    #         screeves_1_as_string = "\n".join(list_matching_layouts[i]['screeves'])
+    #         screeves_2_as_string = "\n".join(list_matching_layouts[j]['screeves'])
+    #
+    #         print(f"\033[31m{screeves_1_as_string}\033[0m")
+    #         print(f"\033[32m{screeves_2_as_string}\033[0m")
+    #
+    #         matcher = SequenceMatcher(None, screeves_1_as_string, screeves_2_as_string)
+    #         matching_blocks = matcher.get_matching_blocks()
+    #         print(matching_blocks)
+    #         for block in matching_blocks:
+    #             pass
+    #
+    #         break
+    #     break
 
 
 if __name__ == "__main__":
